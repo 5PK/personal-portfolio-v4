@@ -29,7 +29,7 @@ func Home() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"bg-black w-full h-full flex justify-center items-center\"><main class=\" border-gray-300 border-2 w-200 h-230\"><section><div class=\"bg-gray-300 h-4\"></div></section><section class=\"p-2 mb-4\"><pre class=\"whitespace-pre text-sm leading-none mt-5 mb-2  text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 to-purple-600\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"p-2 font-mono\"><pre class=\"font-mono whitespace-pre leading-none text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-yellow-500 to-emerald-300\"><br>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -41,13 +41,13 @@ func Home() templ.Component {
 |____|__ \___  >\_/ |__|___|  /   |____|   |__|  (____  /___|  /
         \/   \/             \/                        \/     \/ `)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/home.templ`, Line: 17, Col: 65}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/home.templ`, Line: 13, Col: 65}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</pre><h1 class=\"text-gray-300 text-2xl mb-4\">Software Developer</h1><blockquote class=\"text-gray-500\" cite=\"https://www.goodreads.com/quotes/515816-that-s-all-it-took-to-solve-problems---just-sense\">\"That's all it took to solve problems - Just sense.\" <br>└ Gary Paulsen, Hatchet</blockquote></section><section class=\"p-2\"><h1 class=\"text-gray-300 text-2xl mb-2\">About Me</h1><p class=\"text-gray-500 mb-8\">I’m a Full Stack Developer who loves building scalable, data-driven applications with .NET, Go, Python, PostgreSQL/SQL Server, and React/Next.js. I’m curious, detail-oriented, and thrive on solving hard problems with clean, efficient solutions.<br><br>Outside of coding, I’m passionate about ortholinear keyboards, photography, guitar, and travel. I'm always tinkering, creating, or exploring something new.</p><a href=\"https://github.com/5PK\" class=\"text-gray-300 text-2xl\">&gt; Github</a><br><a href=\"https://www.linkedin.com/in/ktran95/\" class=\"text-gray-300 text-2xl\">&gt; LinkedIn</a></section></main></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</pre><h1 class=\"text-gray-300 \"><br>Software Developer </h1><blockquote class=\"text-gray-500\" cite=\"https://www.goodreads.com/quotes/515816-that-s-all-it-took-to-solve-problems---just-sense\">\"That's all it took to solve problems - Just sense.\" <br>└ Gary Paulsen, Hatchet</blockquote></section><section class=\"p-2\"><h1 class=\"text-gray-300 font-mono\"><br>About Me</h1><p class=\"text-gray-500 font-mono\">I’m a Full Stack Developer building scalable, data-driven applications using .NET, Go, Python, PostgreSQL/SQL Server, and React/Next.js. I’m curious, detail-oriented, and thrive on solving hard problems with clean, efficient solutions.<br><br>Outside of coding, I’m passionate about ortholinear keyboards, photography, guitar, and travel. I'm always tinkering, creating, or exploring something new.<br><br></p><a href=\"https://github.com/5PK\" class=\"font-mono text-gray-300\">github.com/5PK</a><br><a href=\"https://www.linkedin.com/in/5PK\" class=\"font-mono text-gray-300\">linkedin.com/in/5PK</a></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -1,0 +1,38 @@
+package partials
+
+templ Help() {
+<section class="px-2">
+	<pre class="text-gray-500 font-mono">
+{`========================================
+       HELLO WORLD, GOODBYE MOON
+========================================
+
+Welcome to my portfolio! it's not 'real' cli, 
+I don't have enough free time or expertise 
+to write a rust based WASM terminal :-( 
+maybe next year!
+
+Available commands:
+  `}
+	</pre>
+  @CommandText("home", "            ", "Navigate back to the home screen")         
+  @CommandText("exp", "             ", "Show my professional experience")    
+  @CommandText("help", "            ", "Show this help message")          
+  @CommandText("clear", "           ", "Clears the terminal")         
+  @CommandText("travelpics", "      ", "Some photos of my travels")  
+  @CommandText("chat", "            ","coming soon!")          
+	<pre class="text-gray-500 font-mono">
+{`
+
+Type a command and press Enter.
+----------------------------------------
+`}
+	</pre>
+</section>
+}
+
+templ CommandText(text string, whitespace string , description string){
+	<pre class="text-gray-500 font-mono">
+		<span class="text-white">{text}</span>{whitespace}{description}
+	</pre>
+}

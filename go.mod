@@ -1,4 +1,4 @@
-module kevin-portfolio/htmx-templ
+module kevin-portfolio
 
 go 1.23.4
 

@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
+	"kevin-portfolio/internal/handlers"
+	"kevin-portfolio/views"
 	"net/http"
-	"time"
-
-	"kevin-portfolio/htmx-templ/views"
 )
 
 func main() {
@@ -13,12 +12,11 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("assets/"))))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		views.Index("Kevin").Render(r.Context(), w)
+		views.Index().Render(r.Context(), w)
 	})
 
-	http.HandleFunc("/time", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, `<div id="time">%s</div>`, time.Now().Format(time.RFC1123))
-	})
+	http.HandleFunc("POST /terminal/command", handlers.ExecuteCommandHandler)
+	// r.HandleFunc("/terminal/output", handlers.GetOutputHandler).Methods("GET")
 
 	fmt.Println("Listening on http://localhost:3000")
 	http.ListenAndServe(":3000", nil)

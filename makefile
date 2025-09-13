@@ -2,6 +2,7 @@
 TAILWIND = ./tailwindcss
 GO       = go
 AIR      = air
+TEMPL    = templ
 
 # Paths
 INPUT_CSS  = assets/input.css
@@ -18,14 +19,23 @@ css:
 css-watch:
 	$(TAILWIND) -i $(INPUT_CSS) -o $(OUTPUT_CSS) --watch
 
+# Generate templ files once
+templ-generate:
+	$(TEMPL) generate
+
+# Watch templ files and regenerate on changes
+templ-watch:
+	$(TEMPL) generate --watch
+
 # Run Go server normally
 run:
 	$(GO) run .
 
 # Run with hot reload (if air is installed)
 dev:
-	# Run tailwind in background, air for Go reload
+	# Run tailwind, templ, and air in background
 	$(MAKE) css-watch & \
+	$(MAKE) templ-watch & \
 	$(AIR)
 
 # Clean build artifacts

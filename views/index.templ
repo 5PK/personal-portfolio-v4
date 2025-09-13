@@ -1,15 +1,15 @@
 package views
-import "kevin-portfolio/htmx-templ/views/partials"
+import "kevin-portfolio/views/partials"
 
-templ Index(name string) {
+templ Index() {
     <html>
         <head>
             <title>testest</title>
             <script src="https://unpkg.com/htmx.org@1.9.12"></script>
-             <script src="https://cdn.tailwindcss.com/3.3.5"></script>
+            <link href="/static/output.css" rel="stylesheet">
         </head>
         <body class="h-full w-full">
-            @partials.Home()
+            @partials.Terminal()
         </body>
     </html>
 }
