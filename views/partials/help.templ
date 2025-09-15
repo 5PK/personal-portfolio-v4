@@ -2,7 +2,7 @@ package partials
 
 templ Help() {
 <section class="px-2">
-	<pre class="text-gray-500 font-mono">
+	<pre class="text-2xl lg:text-base text-gray-500 font-mono">
 {`========================================
        HELLO WORLD, GOODBYE MOON
 ========================================
@@ -16,12 +16,11 @@ Available commands:
   `}
 	</pre>
   @CommandText("home", "            ", "Navigate back to the home screen")         
-  @CommandText("exp", "             ", "Show my professional experience")    
   @CommandText("help", "            ", "Show this help message")          
   @CommandText("clear", "           ", "Clears the terminal")         
   @CommandText("travelpics", "      ", "Some photos of my travels")  
-  @CommandText("chat", "            ","coming soon!")          
-	<pre class="text-gray-500 font-mono">
+  @CommandText("gear", "            ", "A list of gear I use everyday")          
+	<pre class="text-2xl lg:text-base text-gray-500 font-mono">
 {`
 
 Type a command and press Enter.
@@ -32,7 +31,7 @@ Type a command and press Enter.
 }
 
 templ CommandText(text string, whitespace string , description string){
-	<pre class="text-gray-500 font-mono">
-		<span class="text-white">{text}</span>{whitespace}{description}
+	<pre class="text-2xl lg:text-base text-gray-500 font-mono">
+		<span class="text-2xl lg:text-base text-white">{text}</span>{whitespace}{description}
 	</pre>
 }

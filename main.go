@@ -18,6 +18,6 @@ func main() {
 	http.HandleFunc("POST /terminal/command", handlers.ExecuteCommandHandler)
 	// r.HandleFunc("/terminal/output", handlers.GetOutputHandler).Methods("GET")
 
-	fmt.Println("Listening on http://localhost:3000")
-	http.ListenAndServe(":3000", nil)
+	fmt.Println("Listening on http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
 }

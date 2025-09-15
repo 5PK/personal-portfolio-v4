@@ -27,6 +27,12 @@ func ExecuteCommandHandler(w http.ResponseWriter, r *http.Request) {
 	case "home":
 		partials.Home().Render(r.Context(), w)
 		return
+	case "travelpics":
+		partials.TravelPics().Render(r.Context(), w)
+		return
+	case "gear":
+		partials.Gear().Render(r.Context(), w)
+		return
 	case "clear":
 		w.Header().Set("HX-Reswap", "innerHTML")
 		w.WriteHeader(http.StatusOK)
@@ -34,8 +40,4 @@ func ExecuteCommandHandler(w http.ResponseWriter, r *http.Request) {
 	default:
 		partials.BadInput(command).Render(r.Context(), w)
 	}
-
-	// For now, just return a simple response
-	// w.Header().Set("Content-Type", "text/plain")
-	// w.Write([]byte("Command received: " + command))
 }
