@@ -48,3 +48,6 @@ Thumbs.db
 
 # Temporary files
 /tmp
+
+# Tailwind binary
+tailwindcss
