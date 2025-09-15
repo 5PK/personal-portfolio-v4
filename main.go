@@ -10,7 +10,6 @@ import (
 func main() {
 	// Serve static files (CSS, JS, images, etc.)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("assets/"))))
-	http.Handle("/htmx/", http.StripPrefix("/htmx/", http.FileServer(http.Dir("htmx/"))))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		views.Index().Render(r.Context(), w)
