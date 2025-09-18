@@ -1,10 +1,13 @@
 package handlers
 
 import (
+	agility "kevin-portfolio/internal/agility_cms"
 	"kevin-portfolio/views/partials"
 	"net/http"
 	"strings"
 )
+
+
 
 func ExecuteCommandHandler(w http.ResponseWriter, r *http.Request) {
 	command := r.FormValue("command")
@@ -18,6 +21,14 @@ func ExecuteCommandHandler(w http.ResponseWriter, r *http.Request) {
 	if len(parts) == 0 {
 		http.Error(w, "Invalid command", http.StatusBadRequest)
 		return
+	}
+
+	// Parse global sitemap
+	
+	sm := agility.GetSitemapFlat()
+	
+	for page := range sm {
+		
 	}
 
 	switch command {
