@@ -1,7 +1,8 @@
 package views
 import "kevin-portfolio/views/partials"
 
-templ Index() {
+
+templ Index(homeContent templ.Component) {
     <html>
         <head>
             <title>Kevin Tran</title>
@@ -9,7 +10,7 @@ templ Index() {
             <link href="/static/output.css" rel="stylesheet">
         </head>
         <body class="h-full w-full">
-            @partials.Terminal()
+            @partials.Terminal(homeContent)
         </body>
     </html>
 }

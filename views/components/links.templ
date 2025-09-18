@@ -1,0 +1,10 @@
+package components
+import "kevin-portfolio/internal/agility_cms/types"
+
+templ Links(github types.LinkField, linkedin types.LinkField){
+	<section class="p-2 font-mono">
+		<a href={github.Href} class="text-3xl lg:text-base font-mono text-gray-300">{github.Text}</a>
+		<br>
+		<a href={linkedin.Href} class="text-3xl lg:text-base font-mono text-gray-300">{linkedin.Text}</a>
+	</section>
+}

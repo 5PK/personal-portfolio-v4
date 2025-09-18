@@ -6,6 +6,10 @@
 app = 'personal-port-v4-go'
 primary_region = 'yyz'
 
+[env]
+  # Add any non-secret environment variables here
+  # For secrets like API keys, use: fly secrets set AGILITY_API_KEY=your_key_here
+
 [build]
 
 [http_service]

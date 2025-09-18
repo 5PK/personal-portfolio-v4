@@ -63,17 +63,34 @@ cd personal-port-v4-go
 go mod download
 ```
 
-3. Generate templ files:
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your Agility CMS API key
+```
+
+4. Generate templ files:
 ```bash
 templ generate
 ```
 
-4. Run the application:
+5. Run the application:
 ```bash
 go run main.go
 ```
 
 The application will be available at `http://localhost:8080`
+
+### Environment Variables
+
+The application requires the following environment variables:
+
+- `AGILITY_API_KEY`: Your Agility CMS API key for content management
+
+Create a `.env` file in the root directory with:
+```
+AGILITY_API_KEY=your_api_key_here
+```
 
 ### Development
 
@@ -96,7 +113,12 @@ docker run -p 8080:8080 kevin-portfolio
 
 ### Fly.io
 
-Deploy to Fly.io:
+1. Set your API key as a secret:
+```bash
+fly secrets set AGILITY_API_KEY=your_api_key_here
+```
+
+2. Deploy to Fly.io:
 ```bash
 fly deploy
 ```

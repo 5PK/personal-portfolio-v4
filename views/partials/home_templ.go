@@ -34,27 +34,28 @@ func Home() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(` ____  __.          .__         ___________                     
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(
+			` ____  __.          .__         ___________                     
 |    |/ _|_______  _|__| ____   \__    ___/___________    ____  
 |      <_/ __ \  \/ /  |/    \    |    |  \_  __ \__  \  /    \ 
 |    |  \  ___/\   /|  |   |  \   |    |   |  | \// __ \|   |  \
 |____|__ \___  >\_/ |__|___|  /   |____|   |__|  (____  /___|  /
         \/   \/             \/                        \/     \/ `)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/home.templ`, Line: 13, Col: 65}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/home.templ`, Line: 14, Col: 65}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</pre><h1 class=\"text-3xl lg:text-base text-gray-300 \"><br>Software Developer </h1><blockquote class=\"text-3xl lg:text-base text-gray-500\" cite=\"https://www.goodreads.com/quotes/515816-that-s-all-it-took-to-solve-problems---just-sense\">\"That's all it took to solve problems - Just sense.\" <br>└ Gary Paulsen, Hatchet</blockquote></section><section class=\"p-2\"><h1 class=\"text-3xl lg:text-base text-gray-300 font-mono\"><br>About Me</h1><p class=\"text-3xl lg:text-base text-gray-500 font-mono\">I’m a Full Stack Developer building applications using .NET, Go, Python, PostgreSQL/SQL Server/MongoDB, and React. My temperament is curious and detail-oriented, with a focus on product. I am a proponent of radical simplicity. <br><br>Outside of coding, I’m passionate about ortholinear keyboards, photography, guitar, and travel. Always tinkering, creating, or exploring something new.<br><br>This website was built using the GOTH stack.<br><br></p><a href=\"https://github.com/5PK\" class=\"text-3xl lg:text-base font-mono text-gray-300\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</pre><h1 class=\"text-3xl lg:text-base text-gray-300 \"><br>Software Developer </h1><blockquote class=\"text-3xl lg:text-base text-gray-500\" cite=\"https://www.goodreads.com/quotes/515816-that-s-all-it-took-to-solve-problems---just-sense\">\"That's all it took to solve problems - Just sense.\" <br>└ Gary Paulsen, Hatchet</blockquote></section><section class=\"p-2\"><h1 class=\"text-3xl lg:text-base text-gray-300 font-mono\"><br>About Me</h1><p class=\"text-3xl lg:text-base text-gray-500 font-mono\">I’m a Full Stack Developer building applications using .NET, Go, Python, PostgreSQL/SQL Server/MongoDB, and Javascript. My temperament is curious and detail-oriented, with a focus on product. I am a proponent of radical simplicity. <br><br>Outside of coding, I’m passionate about ortholinear keyboards, photography, guitar, and travel. Always tinkering, creating, or exploring something new.<br><br>This website was built using the GOTH stack.<br><br></p><a href=\"https://github.com/5PK\" class=\"text-3xl lg:text-base font-mono text-gray-300\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(`> `)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/home.templ`, Line: 41, Col: 96}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/home.templ`, Line: 42, Col: 96}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -67,7 +68,7 @@ func Home() templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(`> `)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/home.templ`, Line: 43, Col: 105}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/partials/home.templ`, Line: 44, Col: 105}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
