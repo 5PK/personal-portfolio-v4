@@ -18,10 +18,8 @@ func init() {
         log.Println("No .env file found, relying on system env")
     }
 
-	// Get the Sitemap
-	var sitemap = agility.GetSitemapFlat()
 	// Set the sitemap 
-	agility.SetSitemap(sitemap)
+	agility.RefreshSitemap()
 }
 
 func main() {
@@ -29,7 +27,9 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("assets/"))))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		views.Index().Render(r.Context(), w)
+		// get the home page content from CMS
+		homeContent := agility.GetHomeCommandContent()
+		views.Index(homeContent).Render(r.Context(), w)
 	})
 
 	http.HandleFunc("POST /terminal/command", handlers.ExecuteCommandHandler)

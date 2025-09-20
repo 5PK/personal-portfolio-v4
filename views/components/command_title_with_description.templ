@@ -1,0 +1,15 @@
+package components
+import "kevin-portfolio/internal/agility_cms/types"
+
+templ CommandTitleWithDescription(title string, desc string, textHighlights []types.TextHighlightWithDescription, footnote string){
+	<section class="px-2">
+		<pre class="text-3xl lg:text-base text-gray-500 font-mono">
+	{`========================================
+		   `}{title}{`
+	========================================
+
+	{desc}
+	  `}
+		</pre>
+	</section>
+}
