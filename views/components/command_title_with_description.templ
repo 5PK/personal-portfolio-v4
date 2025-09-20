@@ -1,15 +1,34 @@
 package components
-import "kevin-portfolio/internal/agility_cms/types"
 
-templ CommandTitleWithDescription(title string, desc string, textHighlights []types.TextHighlightWithDescription, footnote string){
-	<section class="px-2">
+import (
+	"kevin-portfolio/internal/agility_cms/types"
+)
+
+templ CommandTitleWithDescription(title string, desc string, textHighlights []types.CommandRow, footnote string){
+	<section class="p-2">
 		<pre class="text-3xl lg:text-base text-gray-500 font-mono">
 	{`========================================
-		   `}{title}{`
-	========================================
+	   `}{title}{`
+========================================
+`}{desc}
+ for _, item := range textHighlights {
+ @CommandText(item.Text, item.Ws, item.Desc)
+ }
 
-	{desc}
-	  `}
+		</pre>
+		<pre class="text-3xl lg:text-base text-gray-500 font-mono">
+{`
+
+`}{footnote}{`
+---------------------------------------
+`}
 		</pre>
 	</section>
+}
+
+
+templ CommandText(text string, whitespace string , description string){
+	<pre class="text-3xl lg:text-base text-gray-500 font-mono">
+		<span class="text-3xl lg:text-base text-white">{text}</span>{whitespace}{description}
+	</pre>
 }

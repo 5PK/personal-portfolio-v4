@@ -9,10 +9,12 @@ import (
 	"kevin-portfolio/views/components"
 	"kevin-portfolio/views/partials"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/a-h/templ"
 )
@@ -21,6 +23,35 @@ import (
 var PageComponents = map[string]func() templ.Component{
 	"help": partials.Help,
 	"home": partials.Home,
+}
+
+// randomSelectImages randomly selects up to count unique images from the input slice
+func randomSelectImages(images []types.ImageGalleryItem, count int) []types.ImageGalleryItem {
+	if len(images) <= count {
+		return images
+	}
+
+	// Create a random source
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+	// Create indices slice
+	indices := make([]int, len(images))
+	for i := range indices {
+		indices[i] = i
+	}
+
+	// Shuffle indices
+	r.Shuffle(len(indices), func(i, j int) {
+		indices[i], indices[j] = indices[j], indices[i]
+	})
+
+	// Take first 'count' indices and build result
+	result := make([]types.ImageGalleryItem, count)
+	for i := 0; i < count; i++ {
+		result[i] = images[indices[i]]
+	}
+
+	return result
 }
 
 func CastField[T any](fields map[string]any, key string) (T, error) {
@@ -66,10 +97,30 @@ var PageComponentRenderer = map[string]func(fields map[string]interface{}) templ
 			panic(err) // or handle gracefully
 		}
 
+		// find max text length
+		maxLen := 0
+		for _, hl := range highlights {
+			if len(hl.Fields.Text) > maxLen {
+				maxLen = len(hl.Fields.Text)
+			}
+		}
+
+		// build inline array with whitespace
+		var highlightsWithWhiteSpace []types.CommandRow
+
+		for _, hl := range highlights {
+			padding := strings.Repeat(" ", maxLen-len(hl.Fields.Text)+4) // +4 for spacing
+			highlightsWithWhiteSpace = append(highlightsWithWhiteSpace, types.CommandRow{
+				Text: hl.Fields.Text,
+				Ws:   padding,
+				Desc: hl.Fields.Description,
+			})
+		}
+
 		return components.CommandTitleWithDescription(
 			fields["title"].(string),
 			fields["description"].(string),
-			highlights,
+			highlightsWithWhiteSpace,
 			fields["footnote"].(string),
 		)
 	},
@@ -88,6 +139,20 @@ var PageComponentRenderer = map[string]func(fields map[string]interface{}) templ
 			fields["header"].(string),
 			strings.ReplaceAll(textBlockString, "\r\n", "<br>"),
 		)
+	},
+	"ImageGallery": func(fields map[string]interface{}) templ.Component {
+		allImages, err := CastField[[]types.ImageGalleryItem](fields, "images")
+		if err != nil {
+			panic(err)
+		}
+
+		// Randomly select 6 unique images
+		selectedImages := randomSelectImages(allImages, 6)
+
+		header := fields["header"].(string)
+		description := fields["description"].(string)
+
+		return components.ImageGallery(header, description, selectedImages)
 	},
 }
 
@@ -131,7 +196,6 @@ func RenderPage(ctx context.Context, w io.Writer, page types.Page) error {
 	}
 	return nil
 }
-
 
 func GetPage(pageID int) types.Page {
 	client := &http.Client{}
