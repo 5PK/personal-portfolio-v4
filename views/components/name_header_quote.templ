@@ -2,7 +2,11 @@ package components
 
 templ NameHeaderQuote(headerName string, jobTitle string, quote string, quoteAuthor string, quoteSrc string){
 	<section class="p-2 font-mono">
-		<pre class="font-mono whitespace-pre leading-none text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-yellow-500 to-emerald-300">
+		<pre class="font-mono whitespace-pre leading-none 
+            bg-gray-900  /* solid background */
+            text-transparent bg-clip-text 
+            bg-gradient-to-r from-cyan-300 via-yellow-500 to-emerald-300 
+            animate-gradient">
 		<br>
 			{headerName}
 		</pre>
