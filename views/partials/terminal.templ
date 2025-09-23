@@ -1,10 +1,11 @@
 package partials
-templ Terminal() {
+
+templ Terminal(homeContent templ.Component) {
 		<div class="bg-black w-full h-full flex md:justify-center md:items-center">
 			<div id="terminal-container" class="border-gray-300 border-2 border-t-16 w-full h-full lg:w-200 lg:h-230 flex flex-col justify-between">
 				<!-- Terminal Output Area -->
 				<div id="terminal-output" class="flex-1 overflow-y-auto min-h-0">
-					@Home()
+					@homeContent
 				</div>
 				<!-- Command Input -->
 				<form 

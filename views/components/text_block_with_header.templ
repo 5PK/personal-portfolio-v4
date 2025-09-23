@@ -1,0 +1,13 @@
+package components
+
+templ TextBlockWithHeader(header string, textBlock string) {
+	<section class="p-2">
+		<h1 class="text-3xl lg:text-base text-gray-300 font-mono">
+			<br>
+			{header}
+		</h1>
+		<p class="text-3xl lg:text-base text-gray-500 font-mono">
+			@templ.Raw(textBlock)
+		</p>
+	</section>
+}

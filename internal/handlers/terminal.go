@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	agility "kevin-portfolio/internal/agility_cms"
 	"kevin-portfolio/views/partials"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -20,24 +22,30 @@ func ExecuteCommandHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	switch command {
-	case "help":
-		partials.Help().Render(r.Context(), w)
-		return
-	case "home":
-		partials.Home().Render(r.Context(), w)
-		return
-	case "travelpics":
-		partials.TravelPics().Render(r.Context(), w)
-		return
-	case "gear":
-		partials.Gear().Render(r.Context(), w)
-		return
-	case "clear":
+	if command == "clear" {
 		w.Header().Set("HX-Reswap", "innerHTML")
 		w.WriteHeader(http.StatusOK)
 		return
-	default:
-		partials.BadInput(command).Render(r.Context(), w)
 	}
+
+	commandRoute := "/terminal/commands/" + command
+
+	// get global sitemap
+	sm := agility.GetCurrentSitemap()
+
+	for route, sitemapPage := range sm {
+		// if the route is a part of terminal commands,
+		log.Println("route" + route)
+		log.Println("command" + commandRoute)
+		if route == commandRoute {
+			// Get the page from agility
+			page := agility.GetPage(sitemapPage.PageID)
+			agility.RenderPage(r.Context(), w, page)
+			return
+		}
+	}
+
+	// no route found
+	partials.BadInput(command).Render(r.Context(), w)
+
 }

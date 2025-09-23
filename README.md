@@ -8,3 +8,4 @@ A terminal-style personal portfolio website built on the GOTH stack.
 - **Templating**: [templ](https://github.com/a-h/templ) - Type-safe Go templating
 - **Frontend**: HTMX for dynamic interactions
 - **Deployment**: Docker + Fly.io
+
