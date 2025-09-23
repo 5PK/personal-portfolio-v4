@@ -29,14 +29,14 @@ func NameHeaderQuote(headerName string, jobTitle string, quote string, quoteAuth
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"p-2 font-mono\"><pre class=\"font-mono whitespace-pre leading-none text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-yellow-500 to-emerald-300\"><br>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"p-2 font-mono\"><pre class=\"font-mono whitespace-pre leading-none \n            bg-gray-900  /* solid background */\n            text-transparent bg-clip-text \n            bg-gradient-to-r from-cyan-300 via-yellow-500 to-emerald-300 \n            animate-gradient\"><br>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(headerName)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 7, Col: 14}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 11, Col: 14}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -49,7 +49,7 @@ func NameHeaderQuote(headerName string, jobTitle string, quote string, quoteAuth
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(jobTitle)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 11, Col: 12}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 15, Col: 12}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -62,7 +62,7 @@ func NameHeaderQuote(headerName string, jobTitle string, quote string, quoteAuth
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(quoteSrc)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 13, Col: 72}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 17, Col: 72}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -75,7 +75,7 @@ func NameHeaderQuote(headerName string, jobTitle string, quote string, quoteAuth
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(quote)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 14, Col: 9}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 18, Col: 9}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -88,7 +88,7 @@ func NameHeaderQuote(headerName string, jobTitle string, quote string, quoteAuth
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(quoteAuthor)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 16, Col: 19}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/name_header_quote.templ`, Line: 20, Col: 19}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
