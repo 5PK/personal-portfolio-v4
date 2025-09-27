@@ -10,12 +10,13 @@ import (
 	"kevin-portfolio/views/partials"
 	"log"
 	"math/rand"
-	"net/http"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	ag "github.com/5PK/agility-fetch-go"
 
 	"github.com/a-h/templ"
 )
@@ -28,6 +29,7 @@ var PageComponents = map[string]func() templ.Component{
 
 // randomSelectImages randomly selects up to count unique images from the input slice
 func randomSelectImages(images []types.ImageGalleryItem, count int) []types.ImageGalleryItem {
+
 	if len(images) <= count {
 		return images
 	}
@@ -53,6 +55,16 @@ func randomSelectImages(images []types.ImageGalleryItem, count int) []types.Imag
 	}
 
 	return result
+}
+
+func DecodeFields[T any](item ag.HeadlessContentItem) (T, error) {
+	var typed T
+	b, err := json.Marshal(item.Fields)
+	if err != nil {
+		return typed, err
+	}
+	err = json.Unmarshal(b, &typed)
+	return typed, err
 }
 
 func CastField[T any](fields map[string]any, key string) (T, error) {
@@ -93,28 +105,36 @@ var PageComponentRenderer = map[string]func(fields map[string]interface{}) templ
 	},
 	"CommandTitleWithDescription": func(fields map[string]interface{}) templ.Component {
 		// retrieve the list of text highlights
-		highlights, err := CastField[[]types.TextHighlightWithDescription](fields, "textHighlightList")
+		highlights, err := CastField[[]ag.HeadlessContentItem](fields, "textHighlightList")
 		if err != nil {
 			panic(err) // or handle gracefully
 		}
 
+		// parse the fields
+		var highlightFields []types.HighlightFields
+		for _, hl := range highlights {
+			fields, _ := DecodeFields[types.HighlightFields](hl)
+			highlightFields = append(highlightFields, fields)
+
+		}
+
 		// find max text length
 		maxLen := 0
-		for _, hl := range highlights {
-			if len(hl.Fields.Text) > maxLen {
-				maxLen = len(hl.Fields.Text)
+		for _, hl := range highlightFields {
+			if len(hl.Text) > maxLen {
+				maxLen = len(hl.Text)
 			}
 		}
 
 		// build inline array with whitespace
 		var highlightsWithWhiteSpace []types.CommandRow
 
-		for _, hl := range highlights {
-			padding := strings.Repeat(" ", maxLen-len(hl.Fields.Text)+4) // +4 for spacing
+		for _, hl := range highlightFields {
+			padding := strings.Repeat(" ", maxLen-len(hl.Text)+4) // +4 for spacing
 			highlightsWithWhiteSpace = append(highlightsWithWhiteSpace, types.CommandRow{
-				Text: hl.Fields.Text,
+				Text: hl.Text,
 				Ws:   padding,
-				Desc: hl.Fields.Description,
+				Desc: hl.Description,
 			})
 		}
 
@@ -158,9 +178,31 @@ var PageComponentRenderer = map[string]func(fields map[string]interface{}) templ
 }
 
 var (
-	sitemap     types.Sitemap
+	sitemap     *map[string]ag.HeadlessContentSiteMapItem
 	sitemapLock sync.RWMutex
 )
+
+var agilityClient *ag.APIClient
+
+func InitializeAPI() {
+
+	configuration := ag.NewConfiguration()
+	configuration.AddDefaultHeader("APIKey", os.Getenv("AGILITY_API_KEY"))
+	configuration.Servers = ag.ServerConfigurations{
+		{
+			URL:         "https://api.aglty.io",
+			Description: "Agility CMS API Server",
+		},
+	}
+
+	agilityClient = ag.NewAPIClient(configuration)
+
+}
+
+// Exported accessor so other packages can use it
+func AgilityClient() *ag.APIClient {
+	return agilityClient
+}
 
 // Refresh updates the sitemap from API
 func RefreshSitemap() {
@@ -171,21 +213,21 @@ func RefreshSitemap() {
 }
 
 // Get returns the current sitemap
-func GetCurrentSitemap() types.Sitemap {
+func GetCurrentSitemap() *map[string]ag.HeadlessContentSiteMapItem {
 	sitemapLock.RLock()
 	defer sitemapLock.RUnlock()
 	return sitemap
 }
 
-func RenderPage(ctx context.Context, w io.Writer, page types.Page) error {
-	log.Println("here" + page.Name)
+func RenderPage(ctx context.Context, w io.Writer, page ag.HeadlessContentPage) error {
+	log.Println("here" + page.GetName())
 	for _, modules := range page.Zones {
 		for _, m := range modules {
-			log.Println("module: " + m.Module)
-			renderer, ok := PageComponentRenderer[m.Module]
+			log.Println("module: " + m.GetModule())
+			renderer, ok := PageComponentRenderer[m.GetModule()]
 			if !ok {
 				// fallback for unknown modules
-				fmt.Fprintf(w, "<!-- unknown module: %s -->", m.Module)
+				fmt.Fprintf(w, "<!-- unknown module: %s -->", m.GetModule())
 				continue
 			}
 
@@ -198,46 +240,16 @@ func RenderPage(ctx context.Context, w io.Writer, page types.Page) error {
 	return nil
 }
 
-func GetPage(pageID int) types.Page {
-	client := &http.Client{}
-	req, err := http.NewRequest("GET", "https://api.aglty.io/234c2f44-u/fetch/en-us/page/"+strconv.Itoa(pageID)+"?contentLinkDepth=2&expandAllContentLinks=true", nil)
-	if err != nil {
-		panic(err)
-	}
-
-	// Add headers
-	req.Header.Set("apikey", os.Getenv("AGILITY_API_KEY"))
-	req.Header.Set("Accept", "application/json")
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		panic(fmt.Sprintf("API error: %s\n%s", resp.Status, string(body)))
-	}
-
-	var page types.Page
-
-	if err := json.NewDecoder(resp.Body).Decode(&page); err != nil {
-		panic(err)
-	}
-
-	return page
-}
-
 // GetHomeCommandContent gets the CMS content for the home command
 func GetHomeCommandContent() templ.Component {
 	sm := GetCurrentSitemap()
 	homeRoute := "/terminal/commands/home"
 
-	for route, sitemapPage := range sm {
+	for route, sitemapPage := range *sm {
 		if route == homeRoute {
-			page := GetPage(sitemapPage.PageID)
-			return createPageComponent(page)
+			page := GetPage(*sitemapPage.PageID)
+			log.Println(json.Marshal(page))
+			return createPageComponent(*page)
 		}
 	}
 
@@ -246,40 +258,33 @@ func GetHomeCommandContent() templ.Component {
 }
 
 // createPageComponent converts a CMS page to a templ component
-func createPageComponent(page types.Page) templ.Component {
+func createPageComponent(page ag.HeadlessContentPage) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) error {
 		return RenderPage(ctx, w, page)
 	})
 }
 
-func GetSitemapFlat() types.Sitemap {
-	client := &http.Client{}
+func GetPage(pageID int32) *ag.HeadlessContentPage {
+	log.Println("page call" + strconv.Itoa(int(pageID)) + "234c2f44-u" + "en-us")
+	resp, _, err  := agilityClient.PageAPI.PageIdGet(context.Background(), "234c2f44-u", ag.FETCH, "en-us", pageID).ContentLinkDepth(5).ExpandAllContentLinks(true).Execute()
 
-	req, err := http.NewRequest("GET", "https://api.aglty.io/234c2f44-u/fetch/en-us/sitemap/flat/website", nil)
 	if err != nil {
 		panic(err)
 	}
 
-	// Add headers
-	req.Header.Set("apikey", os.Getenv("AGILITY_API_KEY"))
-	req.Header.Set("Accept", "application/json")
-	resp, err := client.Do(req)
+	pageJson, _ := json.Marshal(resp)
+	log.Println(string(pageJson))
+	return resp
+}
+
+func GetSitemapFlat() *map[string]ag.HeadlessContentSiteMapItem {
+
+	// agilityClient.SitemapAPI.SitemapFlatChannelNameGet(context.Background(), )
+	resp, _, err := agilityClient.SitemapAPI.SitemapFlatChannelNameGet(context.Background(), "234c2f44-u", ag.FETCH, "en-us", "website").Execute()
+
 	if err != nil {
 		panic(err)
 	}
 
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		panic(fmt.Sprintf("API error: %s\n%s", resp.Status, string(body)))
-	}
-
-	var sitemap types.Sitemap
-
-	if err := json.NewDecoder(resp.Body).Decode(&sitemap); err != nil {
-		panic(err)
-	}
-
-	return sitemap
+	return resp
 }

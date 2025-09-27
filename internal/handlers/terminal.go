@@ -33,14 +33,14 @@ func ExecuteCommandHandler(w http.ResponseWriter, r *http.Request) {
 	// get global sitemap
 	sm := agility.GetCurrentSitemap()
 
-	for route, sitemapPage := range sm {
+	for route, sitemapPage := range *sm {
 		// if the route is a part of terminal commands,
 		log.Println("route" + route)
 		log.Println("command" + commandRoute)
 		if route == commandRoute {
 			// Get the page from agility
-			page := agility.GetPage(sitemapPage.PageID)
-			agility.RenderPage(r.Context(), w, page)
+			page := agility.GetPage(*sitemapPage.PageID)
+			agility.RenderPage(r.Context(), w, *page)
 			return
 		}
 	}

@@ -29,7 +29,7 @@ func NameHeaderQuote(headerName string, jobTitle string, quote string, quoteAuth
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"p-2 font-mono\"><pre class=\"font-mono whitespace-pre leading-none \n            bg-gray-900  /* solid background */\n            text-transparent bg-clip-text \n            bg-gradient-to-r from-cyan-300 via-yellow-500 to-emerald-300 \n            animate-gradient\"><br>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"p-2 font-mono\"><pre class=\"font-mono whitespace-pre leading-none \n            bg-black\n            text-transparent bg-clip-text \n            bg-gradient-to-r from-cyan-300 via-yellow-500 to-emerald-300 \n            animate-gradient\"><br>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

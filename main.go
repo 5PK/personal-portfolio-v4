@@ -2,23 +2,24 @@ package main
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	agility "kevin-portfolio/internal/agility_cms"
 	"kevin-portfolio/internal/handlers"
 	"kevin-portfolio/views"
 	"log"
 	"net/http"
-
-	"github.com/joho/godotenv"
 )
 
-
 func init() {
-    // Load .env file into environment variables
-    if err := godotenv.Load(); err != nil {
-        log.Println("No .env file found, relying on system env")
-    }
+	// Load .env file into environment variables
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, relying on system env")
+	}
 
-	// Set the sitemap 
+	// Initialize agility api
+	agility.InitializeAPI()
+
+	// Set the sitemap
 	agility.RefreshSitemap()
 }
 
